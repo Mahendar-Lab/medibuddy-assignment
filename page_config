@@ -1,0 +1,24 @@
+import axios from 'axios';
+
+const fetchPageConfig = async () => {
+  try {
+    const response = await axios.get('https://api.example.com/page_config');
+    const pageConfig = response.data;
+
+    // Validate the data
+    if (!pageConfig || !Array.isArray(pageConfig)) {
+      throw new Error('Invalid page config data');
+    }
+
+    // Provide default values for missing data
+    const defaultPageConfig = [
+      { id: 1, title: 'Default Title', content: 'Default Content' },
+    ];
+    const mergedPageConfig = [...defaultPageConfig, ...pageConfig];
+
+    return mergedPageConfig;
+  } catch (error) {
+    console.error('Error fetching page config:', error);
+    return [];
+  }
+};
